@@ -47,14 +47,14 @@
       .range(d3.schemeTableau10);
   
     // Plot the bar chart
-    createBarChart(newData, color, 'Education', 'Title');   // [NEW] Parse the color to the chart function
+    createBarChart("#bar", newData, color, 'Education', 'Title');   // [NEW] Parse the color to the chart function
     
     // Plot the line chart
     // createLineChart(data, color);     // [NEW] Parse the color to the chart function
     var arr = [1,2,3];
     for (let i in arr) {
       console.log(arr[i]);
-      createPieChart(newData, color, 'Education', 'Title');
+      createPieChart2(newData, color );
   }
 
   })
@@ -76,15 +76,15 @@
       .domain(feature)
       .range(d3.schemeTableau10);
     console.log('value' +value)
-    createBarChart(newData, color, value, value);   // [NEW] Parse the color to the chart function
+    createBarChart("#bar", newData, color, value, value);   // [NEW] Parse the color to the chart function
     
     // Plot the line chart
     // createLineChart(data, color);     // [NEW] Parse the color to the chart function
-  //   var arr = [1,2,3];
-  //   for (let i in arr) {
-  //     console.log(arr[i]);
-  //     createPieChart(newData, color, value, value);
-  // }
+    var arr = [1,2,3];
+    for (let i in arr) {
+      console.log(arr[i]);
+      createPieChart2(newData, color);
+  }
 
   }
   function clearBox2(elementID) {
@@ -95,89 +95,6 @@
     }
 }
   
-  // const createBarChart2 = (data, color, col) => {
-  //   /* Set the dimensions and margins of the graph
-  //     Ref: https://observablehq.com/@d3/margin-convention */
-  //   const width = 900, height = 400;
-  //   const margins = {top: 20, right: 40, bottom: 80, left: 40};
-  
-  //   /* Create the SVG container */
-  //   const svg = d3.select("#bar")
-  //     .append("svg")
-  //       //.attr("width", width)
-  //       //.attr("height", height)
-  //       .attr("viewBox", [0, 0, width, height]);
-  
-  //   /* Define x-axis, y-axis, and color scales
-  //     Ref: https://observablehq.com/@d3/introduction-to-d3s-scales */
-  //   const xScale = d3.scaleBand()
-  //     .domain(feature)
-  //     .range([margins.left, width-margins.right])
-  //     .paddingInner(0.2);
-    
-  //   // console.log(xScale("France"));
-  //   // console.log(xScale("Austria"));
-  //   console.log(xScale.bandwidth());
-  //   console.log(xScale.step());
-  
-  //   const yScale = d3.scaleLinear()
-  //     .domain([0, d3.count(data, d => d.Attitude)])
-  //     .range([height-margins.bottom, margins.top])
-  
-  //   console.log("Here!")
-  //   console.log(yScale(0));
-  //   console.log(yScale(3));
-  
-
-  //   var meanAttitudeByFeature = d3.rollups(data, v => d3.count(v, d => d.Attitude), d => d.Education)
-
-  //   meanAttitudeByFeature.sort((a, b) => a[0].localeCompare(b[0]));
-  //   console.log('meanAttitudeByFeature', meanAttitudeByFeature)
-  //   console.log('data', data)
-    
-  //   const bar = svg.append("g")
-  //     .attr("class", "bars")
-  //     .selectAll("rect")
-  //     .data(meanAttitudeByFeature)
-  //     .join("rect")
-  //       .attr("x", d => xScale(d[0]))
-  //       .attr("y", d => yScale(d[1]))
-  //       .attr("width", xScale.bandwidth())
-  //       .attr("height", d => yScale(0) - yScale(d[1]))
-  //       .attr("fill", d => color(d[0]));
-
-  //   /* Add the tooltip when hover on the bar */
-  //   bar.append("title").text(d => d.Education);
-    
-  //   /* Create the x and y axes and append them to the chart
-  //     Ref: https://www.d3indepth.com/axes/ and https://github.com/d3/d3-axis */
-  //   const xAxis = d3.axisBottom(xScale);
-  
-  //   const xGroup = svg.append("g")
-  //       .attr("transform", `translate(0, ${height-margins.bottom})`)
-  //     .call(xAxis);
-  
-  //   xGroup.selectAll("text")
-  //     .style("text-anchor", "end")
-  //     .attr("dx", "-.8em")
-  //     .attr("dy", ".15em")
-  //     .attr("transform", "rotate(-65)").text(d=>titles[col][d]);
-  
-  //   const yAxis = d3.axisLeft(yScale);
-  
-  //   svg.append("g")
-  //       .attr("transform", `translate(${margins.left}, 0)`)
-  //     .call(yAxis);
-
-  //   // add title
-  //   svg.append("text")
-  //     .attr("text-anchor", "middle")
-  //     .style("font-size", "20px") 
-  //     .attr("y", margins.left)
-  //     .attr("x", margins.top+400)
-  //     .text("Attitude To Homosexuality w.r.t. Education Level")
-
-  // }
   
 
 
