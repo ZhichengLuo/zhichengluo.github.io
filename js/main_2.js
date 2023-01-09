@@ -2,28 +2,30 @@
   Ref: https://github.com/d3/d3-time-format */
   const parseTime = d3.timeParse("%Y");
   console.log(parseTime("2020"));
+  dataset = NaN
+  feature = NaN
   
   /* Load the dataset and formatting variables
     Ref: https://www.d3indepth.com/requests/ */
-  d3.csv("../data/CLDS2018_cleaned_data.csv", d => {
+  d3.csv("../data/CLDS2018_for_visualization.csv", d => {
     return {
-      'AttitudeToHomosexuality': d.AttitudeToHomosexuality,
-      'AnnualIncome': d.AnnualIncome,
-      'MaritalStatus': d.MaritalStatus,
-      'EducationLevel': d.EducationLevel,
+      'Attitude': d.Attitude,
+      'Income': d.Income,
+      'Education': d.Education,
+      'Age':d.Age,
     }
   }).then(data => {
     // Print out the data on the console
     console.log(data);
-  
+    dataset = data;
     /* Data Manipulation in D3 
       Ref: https://observablehq.com/@d3/d3-extent?collection=@d3/d3-array */
 
-    console.log('AttitudeToHomosexuality min:', d3.min(data, d => d.AttitudeToHomosexuality));
-    console.log('AttitudeToHomosexuality max:', d3.max(data, d => d.AttitudeToHomosexuality));
-    console.log('AttitudeToHomosexuality extent:', d3.extent(data, d => d.AttitudeToHomosexuality));
+    console.log('Attitude min:', d3.min(data, d => d.Attitude));
+    console.log('Attitude max:', d3.max(data, d => d.Attitude));
+    console.log('Attitude extent:', d3.extent(data, d => d.Attitude));
   
-    // const newData = data.filter(d => d.AttitudeToHomosexuality === '3');
+    // const newData = data.filter(d => d.Attitude === '3');
     const newData = data;
     console.log(newData);
   
@@ -33,24 +35,72 @@
     console.log(newData);*/
   
     // Get the mean and median of gender gap percentage
-    console.log(d3.mean(newData, d => d.AttitudeToHomosexuality));
-    console.log(d3.median(newData, d => d.AttitudeToHomosexuality));
+    console.log(d3.mean(newData, d => d.Attitude));
+    console.log(d3.median(newData, d => d.Attitude));
   
     // [NEW] Move the color scale here to share with both charts
-    const education = data.map(d => d.EducationLevel);
-  
+    const education = data.map(d => d.Education);
+    feature = education
     const color = d3.scaleOrdinal()
-      .domain(education)
+      .domain(feature)
       .range(d3.schemeTableau10);
   
     // Plot the bar chart
-    createBarChart(newData, color);   // [NEW] Parse the color to the chart function
-  
+    createBarChart2(newData, color);   // [NEW] Parse the color to the chart function
+    
     // Plot the line chart
     // createLineChart(data, color);     // [NEW] Parse the color to the chart function
+    var arr = [1,2,3];
+    for (let i in arr) {
+      console.log(arr[i]);
+      createPieChart2(newData, color);
+  }
+
   })
+
+  d3.select("#feature").on("change", function(e) {
+    // Get the year selected
+    // console.log(e)
+    // console.log(this.value)
+
+    // Update the chart
+    update2(this.value);
+  });
+
+  function update2(value) {
+    clearBox2('bar')
+    clearBox2('pie')
+    const newData = dataset;
+    const color = d3.scaleOrdinal()
+      .domain(feature)
+      .range(d3.schemeTableau10);
+    console.log(value)
+    if (value == 'education')
+        mapdict = {1:'Uneducated', 2:'Primary', 3:'Middle', 4:'high'}
+    else if (value == 'age')
+        mapdict = {1:'youth', 2:'middle', 3:'elder'}
+    else if (value == 'income')
+        mapdict = {1:'low', 2:'middle', 3:'high'}
+    createBarChart2(newData, color,);   // [NEW] Parse the color to the chart function
+    
+    // Plot the line chart
+    // createLineChart(data, color);     // [NEW] Parse the color to the chart function
+    var arr = [1,2,3];
+    for (let i in arr) {
+      console.log(arr[i]);
+      createPieChart2(newData, color);
+  }
+
+  }
+  function clearBox2(elementID) {
+    var div = document.getElementById(elementID);
+      
+    while(div.firstChild) {
+        div.removeChild(div.firstChild);
+    }
+}
   
-  const createBarChart = (data, color) => {
+  const createBarChart2 = (data, color) => {
     /* Set the dimensions and margins of the graph
       Ref: https://observablehq.com/@d3/margin-convention */
     const width = 900, height = 400;
@@ -66,47 +116,34 @@
     /* Define x-axis, y-axis, and color scales
       Ref: https://observablehq.com/@d3/introduction-to-d3s-scales */
     const xScale = d3.scaleBand()
-      .domain(data.map(d => d.EducationLevel))
+      .domain(feature)
       .range([margins.left, width-margins.right])
       .paddingInner(0.2);
-  
+    
     // console.log(xScale("France"));
     // console.log(xScale("Austria"));
     console.log(xScale.bandwidth());
     console.log(xScale.step());
   
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.AttitudeToHomosexuality)])
+      .domain([0, d3.count(data, d => d.Attitude)])
       .range([height-margins.bottom, margins.top])
   
     console.log("Here!")
     console.log(yScale(0));
     console.log(yScale(3));
   
-    /* Working with Color: https://observablehq.com/@d3/working-with-color
-      Color schemes: https://observablehq.com/@d3/color-schemes 
-      d3-scale-chromatic: https://github.com/d3/d3-scale-chromatic */
-    /*const countries = data.map(d => d.EducationLevel);
-  
-    const color = d3.scaleOrdinal()
-      .domain(countries)
-      .range(d3.schemeTableau10);
-  
-    console.log(color("France"));*/
-  
-    /* Create the bar elements and append to the SVG group
-      Ref: https://observablehq.com/@d3/bar-chart */
 
-    var meanAttitudeByEducation = d3.rollups(data, v => d3.mean(v, d => d.AttitudeToHomosexuality), d => d.EducationLevel)
+    var meanAttitudeByFeature = d3.rollups(data, v => d3.count(v, d => d.Attitude), d => d.Education)
 
-    meanAttitudeByEducation.sort((a, b) => a[0].localeCompare(b[0]));
-    console.log('meanAttitudeByEducation', meanAttitudeByEducation)
+    meanAttitudeByFeature.sort((a, b) => a[0].localeCompare(b[0]));
+    console.log('meanAttitudeByFeature', meanAttitudeByFeature)
     console.log('data', data)
     
     const bar = svg.append("g")
       .attr("class", "bars")
       .selectAll("rect")
-      .data(meanAttitudeByEducation)
+      .data(meanAttitudeByFeature)
       .join("rect")
         .attr("x", d => xScale(d[0]))
         .attr("y", d => yScale(d[1]))
@@ -115,7 +152,7 @@
         .attr("fill", d => color(d[0]));
 
     /* Add the tooltip when hover on the bar */
-    bar.append("title").text(d => d.EducationLevel);
+    bar.append("title").text(d => d.Education);
     
     /* Create the x and y axes and append them to the chart
       Ref: https://www.d3indepth.com/axes/ and https://github.com/d3/d3-axis */
@@ -147,79 +184,65 @@
 
   }
   
-  const createLineChart = (data, color) => {
-    /* Set the dimensions and margins of the graph */
-    const width = 900, height = 400;
-    // [NEW] Change the right margin to show the country names
-    //const margins = {top: 20, right: 40, bottom: 80, left: 40};
-    const margins = {top: 20, right: 100, bottom: 80, left: 40};
+
+
+  const createPieChart2 = (data, colors) => {
+    // Set the dimensions and margins of the graph
+    var width = 200
+    height = 200
+    margin = 40
+
+    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+    var radius = Math.min(width, height) / 2 - margin
+    const margins = {top: 10, right: 100, bottom: 20, left: 20};
+    const svg = d3.select("#pie")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", `translate(${width/2}, ${height/2})`);
+   
+    var pie_data = d3.rollups(data, v => d3.count(v, d => d.Attitude), d => d.Education);
+    pie_data = Object.assign({}, ...pie_data.map((x) => ({[x[0]]: x[1]})));
+    console.log(pie_data);
+    const pie = d3.pie()
+        .value(function(d) {return d[1]})
+    var data_ready = pie(Object.entries(pie_data))
+
+    const arcGenerator = d3.arc()
+    .innerRadius(0)
+    .outerRadius(radius)
+    var color = d3.scaleOrdinal()
+    .range(d3.schemeSet2)
+    
+    const pie_chart = svg.
+                      selectAll('whatever')
+                        .data(data_ready)
+                        .enter()
+                        .append('path')
+                        .attr('d', d3.arc()
+                          .innerRadius(0)
+                          .outerRadius(radius))
+                          .attr('fill', function(d){ return(color(d.data[1])) })
+                        .attr("stroke", "black")
+                        .style("stroke-width", "1px")
+                        .style("opacity", 0.7)
   
-    /* Create the SVG container */
-    const svg = d3.select("#line")
-      .append("svg")
-        .attr("viewBox", [0, 0, width, height]);
-  
-    console.log(data);
-  
-    /* Define x-axis, y-axis, and color scales */
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d=>d.EducationLevel)])
-      .range([height - margins.bottom, margins.top]);
-  
-    console.log(yScale(22));
-  
-    const xScale = d3.scaleTime()
-      .domain(d3.extent(data, d => d.date))
-      .range([margins.left, width - margins.right]); 
-  
-    /* Construct a line generator
-      Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
-    const line = d3.line()
-      .curve(d3.curveLinear)
-      .x(d => xScale(d.date))
-      .y(d => yScale(d.EducationLevel));
-  
-    /* Group the data for each country
-      Ref: https://observablehq.com/@d3/d3-group */
-    const group = d3.group(data, d => d.AttitudeToHomosexuality);
-    console.log(group);
-  
-    /* Create line paths for each country */
-    const path = svg.selectAll('path')
-      .data(group)
-      .join('path')
-        .attr('d', ([i, d]) => line(d))
-        .style('stroke', ([i, d]) => color(i)) // [NEW] Change the stroke color to align with bar chart
-        .style('stroke-width', 2)
-        .style('fill', 'transparent')
-        .style('opacity', 0.8); // [NEW] Add opacity to the line
-  
-    /* [NEW] Add the tooltip when hover on the line */
-    path.append('title').text(([i, d]) => i);
-  
-    /* [NEW] Create the x and y axes and append them to the chart */
-    const xAxis = d3.axisBottom(xScale);
-  
-    svg.append("g")
-      .attr("transform", `translate(0,${height - margins.bottom})`)
-      .call(xAxis);
-  
-    const yAxis = d3.axisLeft(yScale);
-  
-    svg.append("g")
-      .attr("transform", `translate(${margins.left},0)`)
-      .call(yAxis)
-  
-    /* [NEW] Add text labels on the right of the chart */
-    const data2020 = data.filter(data => data.year === 2020);
-    svg.selectAll('text.label')
-      .data(data2020)
+      svg
+      .selectAll('whatever')
+      .data(data_ready)
       .join('text')
-        .attr('x', width - margins.right + 5)
-        .attr('y', d => yScale(d.EducationLevel))
-        .attr('dy', '0.35em')
-        .style('font-family', 'sans-serif')
-        .style('font-size', 12)
-        .style('fill', d => color(d.AttitudeToHomosexuality))
-      .text(d => d.AttitudeToHomosexuality);
+      .text(function(d){ return d.data[0]})
+      .attr("transform", function(d) { return `translate(${arcGenerator.centroid(d)})`})
+      .style("text-anchor", "middle")
+      .style("font-size", 12)
+
+      svg.append("text")
+      .attr("x", width/2)
+      .attr("y", margin)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .text("Awesome Barchart");
+      
+                        
   }
