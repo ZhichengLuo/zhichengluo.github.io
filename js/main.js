@@ -39,7 +39,7 @@
       .range(d3.schemeTableau10);
   
     // Plot the bar chart
-    createBarChart(data, bar_color, 'Attitude', "People Holding Different Attitudes");   // [NEW] Parse the color to the chart function
+    createBarChart("#bar_chart", data, bar_color, 'Attitude', "People Holding Different Attitudes");   // [NEW] Parse the color to the chart function
     data_for_pie = data
  
   })
@@ -68,14 +68,14 @@
     node.innerHTML = '';
 }
 
-  const createBarChart = (data, color, col, chart_title) => {
+  const createBarChart = (element_id, data, color, col, chart_title) => {
     /* Set the dimensions and margins of the graph
       Ref: https://observablehq.com/@d3/margin-convention */
     const width = 400, height = 200;
     const margins = {top: 60, right: 40, bottom: 40, left: 40};
   
     /* Create the SVG container */
-    const svg = d3.select("#bar_chart")
+    const svg = d3.select(element_id)
       .append("svg")
       .attr("viewBox", [0, 0, width, height]);
   
