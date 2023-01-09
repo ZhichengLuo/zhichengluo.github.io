@@ -75,22 +75,16 @@
     const color = d3.scaleOrdinal()
       .domain(feature)
       .range(d3.schemeTableau10);
-    console.log(value)
-    if (value == 'education')
-        mapdict = {1:'Uneducated', 2:'Primary', 3:'Middle', 4:'high'}
-    else if (value == 'age')
-        mapdict = {1:'youth', 2:'middle', 3:'elder'}
-    else if (value == 'income')
-        mapdict = {1:'low', 2:'middle', 3:'high'}
-    createBarChart(newData, color, 'Education', 'Title');   // [NEW] Parse the color to the chart function
+    console.log('value' +value)
+    createBarChart(newData, color, value, value);   // [NEW] Parse the color to the chart function
     
     // Plot the line chart
     // createLineChart(data, color);     // [NEW] Parse the color to the chart function
-    var arr = [1,2,3];
-    for (let i in arr) {
-      console.log(arr[i]);
-      createPieChart2(newData, color);
-  }
+  //   var arr = [1,2,3];
+  //   for (let i in arr) {
+  //     console.log(arr[i]);
+  //     createPieChart(newData, color, value, value);
+  // }
 
   }
   function clearBox2(elementID) {
