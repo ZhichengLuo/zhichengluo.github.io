@@ -20,7 +20,7 @@
     },
     'Attitude': {
       1:'Negative',
-      2:'Neutural',
+      2:'Neutral',
       3:'Positive',
     }
   }
