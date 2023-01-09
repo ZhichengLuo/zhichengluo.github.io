@@ -83,7 +83,7 @@
       Ref: https://observablehq.com/@d3/introduction-to-d3s-scales */
     console.log('data.map(d => d.Attitude)', data.map(d => d.Attitude))
     const xScale = d3.scaleBand()
-      .domain(data.map(d => d.Attitude))
+      .domain(data.map(d => d[col]))
       .range([margins.left, width-margins.right])
       .paddingInner(0.5);
   
