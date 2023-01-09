@@ -11,7 +11,7 @@
     'Age': {
       1:'Youth',
       2:'Middle age',
-      3:'Olders',
+      3:'Elder',
     },
     'Income': {
       1:'Low income',
