@@ -39,7 +39,7 @@
       .range(d3.schemeTableau10);
   
     // Plot the bar chart
-    createBarChart("#bar", newData, color, 'Education', 'Title');   // [NEW] Parse the color to the chart function
+    createBarChart("#bar", newData, color, 'Education', 'People of Different '+'Education');   // [NEW] Parse the color to the chart function
     
     // Plot the line chart
     // createLineChart(data, color);     // [NEW] Parse the color to the chart function
@@ -66,7 +66,7 @@
     const color = d3.scaleOrdinal()
       .domain(feature)
       .range(d3.schemeTableau10);
-    createBarChart("#bar", newData, color, value, value);   // [NEW] Parse the color to the chart function
+    createBarChart("#bar", newData, color, value, 'People of Different '+value);   // [NEW] Parse the color to the chart function
     
     // Plot the line chart
     // createLineChart(data, color);     // [NEW] Parse the color to the chart function
