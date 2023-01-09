@@ -8,9 +8,7 @@
 </head>
 <body>
 
-
 	<div id="attitude2feature">
-		<div id="bar_chart" class="responsive-svg-container"></div>
 		<div class="responsive-svg-container" id="form">
 			<label for="select-feature">Select feature</label>
 			<select name="select-feature" id="select-feature">
@@ -20,10 +18,25 @@
 				<option value="Income">Annual Income</option>
 			</select>
 		</div>
+		<div id="bar_chart" class="responsive-svg-container"></div>
+		
 		<div id="pie_chart" class="responsive-svg-container"></div>
 	</div>
 
 	<script src="js/d3.v7.min.js"></script>
 	<script src="js/main.js"></script>
+
+	<div class="responsive-svg-container" id="form">
+		<label for="feature">Feature Selection:</label>
+		<select name="feature" id="feature">
+			<option value="income">Income</option>
+			<option value="age">Age</option>
+            <option value="education">Education</option>
+		</select>
+	</div>
+	<div id="bar" class="responsive-svg-container"></div>
+    <div id="pie" class="responsive-svg-container"></div>
+	
+	<script src="js/main_2.js"></script>
 </body>
 </html>
