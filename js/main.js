@@ -42,6 +42,18 @@
     createBarChart("#bar_chart", data, bar_color, 'Attitude', "People Holding Different Attitudes");   // [NEW] Parse the color to the chart function
     data_for_pie = data
  
+
+
+    var feature = 'Education'
+
+    var pie_color = d3.scaleOrdinal()
+      .domain(data_for_pie.map(d => d[feature]))
+      .range(d3.schemeTableau10)
+
+    createPieChart('#pie_chart', data_for_pie, '1', feature, pie_color);  
+    createPieChart('#pie_chart', data_for_pie, '2', feature, pie_color);  
+    createPieChart('#pie_chart', data_for_pie, '3', feature, pie_color); 
+
   })
   
   d3.select("#select-feature").on("change", function(e) {
