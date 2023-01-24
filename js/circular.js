@@ -87,7 +87,7 @@ const svg = d3.select("#circular_bar")
       .domain(data.map(d => circular_titles[d.column][d.index])); // The domain of the X axis is the list of states.
   const y = d3.scaleRadial()
       .range([innerRadius, outerRadius])   // Domain will be define later.
-      .domain([-1, 1]); // Domain of Y is from 0 to the max seen in the data
+      .domain([-0.05, 1]); // Domain of Y is from 0 to the max seen in the data
 
   // Add the bars
   svg.append("g")
