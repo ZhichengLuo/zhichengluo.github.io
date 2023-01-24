@@ -188,7 +188,7 @@
       .style("font-size", 13)
 
       svg.append("text")
-        .attr("x", 0)
+        .attr("x", width/3)
         .attr("y", height/2)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
