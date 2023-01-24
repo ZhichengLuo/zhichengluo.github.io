@@ -53,7 +53,7 @@
   
   /* Load the dataset and formatting variables
     Ref: https://www.d3indepth.com/requests/ */
-  const createCircular = (file_name, color,) => {
+  const createCircular = (file_name, color, margin) => {
   d3.csv(file_name, d => {
     return {
       'column': d.column,
@@ -64,10 +64,10 @@
     // Print out the data on the console
     dataset = data;
   
-    const margin = {top: 100, right: 0, bottom: 0, left: 0},
-    width = 460 - margin.left - margin.right,
-    height = 460 - margin.top - margin.bottom,
-    innerRadius = 90,
+    // const margin = {top: 50, right: 50, bottom: 0, left: 50},
+    width = 400 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom,
+    innerRadius = 60,
     outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
 
 // append the svg object
@@ -102,6 +102,23 @@ const svg = d3.select("#circular_bar")
           .endAngle(d => x(circular_titles[d.column][d.index]) + x.bandwidth())
           .padAngle(0.01)
           .padRadius(innerRadius))
+          .attr("id",function(d,i){
+            return d.column;
+          })
+        .on('mouseover', function (d, i) {
+            console.log(this);
+            console.log(d)
+            console.log(i["column"])
+            d3.selectAll("#"+i["column"]).transition()
+                 .duration('50')
+                 .attr('opacity', '.65');
+       })
+        .on('mouseout', function (d, i) {
+            d3.selectAll("#"+i["column"]).transition()
+                 .duration('50')
+                 .attr('opacity', '1');
+        
+       })
 
   // Add the labels
   svg.append("g")
@@ -116,9 +133,10 @@ const svg = d3.select("#circular_bar")
         .style("font-size", "11px")
         .attr("alignment-baseline", "middle")
 
-    
+  
+        
   })
                         
 }
-createCircular("../data/positive_circular.csv", "#69b3a2")
-createCircular("../data/negative_circular.csv", "#b3697a")
+const circular1 = createCircular("../data/positive_circular.csv", "#69b3a2", {top: 50, right: 50, bottom: 0, left: 50})
+const circular2 = createCircular("../data/negative_circular.csv", "#b3697a", {top: 50, right: 50, bottom: 0, left: 50})
