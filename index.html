@@ -5,6 +5,25 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gender Pay Gap | D3.js Tutorial</title>
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+
+	<script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+	<script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+	<script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+	<script src="https://cdn.anychart.com/releases/v8/js/anychart-radar.min.js"></script>
+	<link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" type="text/css" rel="stylesheet">
+	<link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
+	<style type="text/css">
+	
+		html,
+		body,
+		#radar_container {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		}
+	
+	</style>
 </head>
 <body>
 
@@ -35,8 +54,69 @@
 	</div>
 	<div id="bar" class="responsive-svg-container"></div>
     <div id="pie" class="responsive-svg-container"></div>
-    <div id="rader" class="responsive-svg-container"></div>
+
 	
+	<div id="radar_container"></div>
+	<script>
+  
+	  anychart.onDocumentReady(function () {
+		// create data set on our data
+		var chartData = {
+		  title: 'Characteristics of groups holding different attitudes towards homosexuality',
+		  header: ['#', 'Negative', 'Neutral', 'Positive'],
+		  rows: [
+			['Education', 0.2, 0.5739805754949188, 0.8],
+			['Age', 0.8, 0.595975131692656, 0.2],
+			['Income', 0.2, 0.49321060966404984, 0.8],
+			['HowMuchYouAgreeThatHavingBoysBetterThanGirls', 0.6922921101413757, 0.8, 0.2],
+			['HomosexualPeopleYouKnow', 0.2, 0.31676078453362283, 0.8]
+		  ]
+		};
+  
+		// create radar chart
+		var chart = anychart.radar();
+  
+		
+		var interactivity = chart.interactivity();
+		interactivity.selectionMode("singleSelect");
+		
+		chart.palette(["#b3697a", "#b3a269", "#69b3a2"]);
+		// set default series type
+		chart.defaultSeriesType('area');
+  
+		// set chart data
+		chart.data(chartData);
+  
+		// force chart to stack values by Y scale.
+		// chart.yScale().stackMode('value');
+  
+
+
+		chart.yGrid().palette(["gray 0.05", "gray 0.1"]);  
+		// set yAxis settings
+		chart.yAxis().stroke('#545f69');
+		chart.yAxis().ticks().stroke('#545f69');
+  
+		// set yAxis labels settings
+		chart
+		  .yAxis()
+		  .labels()
+		  .fontColor('#545f69')
+		  .format('{%Value}{scale:(1000000)|(M)}');
+  
+		// set chart legend settings
+		chart.legend().align('center').position('center-bottom').enabled(true);
+  
+		// set container id for the chart
+		chart.container('radar_container');
+		// initiate chart drawing
+		chart.draw();
+	  });
+	
+  </script>
+
+
+
 	<script src="js/main_2.js"></script>
 </body>
 </html>
