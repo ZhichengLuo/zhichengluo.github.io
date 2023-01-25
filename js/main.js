@@ -1,5 +1,6 @@
 
   var data_for_pie;
+  var data_for_spader;
 
   const titles = {
     'Education': {
@@ -22,8 +23,142 @@
       1:'Negative',
       2:'Neutral',
       3:'Positive',
+    },
+    'HowMuchYouAgreeThatHavingBoysBetterThanGirls': {
+      1:'Strongly agree',
+      2:'Agree',
+      3:'Neutral',
+      3:'Disagree',
+      3:'Strongly disagree',
     }
   }
+
+  // load data for spader chart
+  d3.csv("../data/data_for_rader.csv", d => {
+    return {
+      'Attitude': d.Attitude,
+      'Income': d.Income,
+      'Age': d.Age,
+      'Education': d.Education,
+      'Do you agree it\'s better to have boys than girls': d.HowMuchYouAgreeThatHavingBoysBetterThanGirls1,
+      'How many homosexual people do you know': d.HomosexualPeopleYouKnow,
+    }
+  }).then(data => {
+    
+    let features = ['Income', 'Age', 'Education', 'Do you agree it\'s better to have boys than girls',  'How many homosexual people do you know']
+
+    data_for_spader = data
+    console.log("data_for_spader", data_for_spader)
+ 
+    let width = 800
+    let height = 800;
+    
+    /* Create the SVG container */
+    const svg = d3.select("#rader")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    console.log(data.map(d => d.Attitude))
+    let radialScale = d3.scaleLinear()
+      .domain([0,3])
+      .range([0, 250]);
+    let ticks = [1, 2, 3];
+  
+    svg.selectAll("circle")
+    .data(ticks)
+    .join(
+        enter => enter.append("circle")
+            .attr("cx", width / 2)
+            .attr("cy", height / 2)
+            .attr("fill", "none")
+            .attr("stroke", "gray")
+            .attr("r", d => radialScale(d))
+            .attr("opacity", 0.3)
+    );
+
+    svg.selectAll(".ticklabel")
+    .data(ticks)
+    .join(
+        enter => enter.append("text")
+            .attr("class", "ticklabel")
+            .attr("x", width / 2 + 5)
+            .attr("y", d => height / 2 - radialScale(d))
+            .text(d => d.toString())
+            .attr("opacity", 0.5)
+    );
+
+    function angleToCoordinate(angle, value){
+      let x = Math.cos(angle) * radialScale(value);
+      let y = Math.sin(angle) * radialScale(value);
+      return {"x": width / 2 + x, "y": height / 2 - y};
+    }
+    
+    let featureData = features.map((f, i) => {
+      let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
+      return {
+          "name": f,
+          "angle": angle,
+          "line_coord": angleToCoordinate(angle, 3),
+          "label_coord": angleToCoordinate(angle, 3.5)
+      };
+    });
+  
+    console.log("featureData", featureData)
+
+    // draw axis line
+    svg.selectAll("line")
+      .data(featureData)
+      .join(
+          enter => enter.append("line")
+              .attr("x1", width / 2)
+              .attr("y1", height / 2)
+              .attr("x2", d => d.line_coord.x)
+              .attr("y2", d => d.line_coord.y)
+              .attr("stroke","black")
+              .attr("opacity", 0.5)
+      );
+    
+    // draw axis label
+    svg.selectAll(".axislabel")
+      .data(featureData)
+      .join(
+          enter => enter.append("text")
+              .attr("x", d => d.label_coord.x)
+              .attr("y", d => d.label_coord.y)
+              .text(d => d.name)
+      );
+
+      let line = d3.line()
+        .x(d => d.x)
+        .y(d => d.y);
+      let colors = ["red", "yellow", "green"];
+
+    function getPathCoordinates(data_point){
+      let coordinates = [];
+      for (var i = 0; i < features.length; i++){
+          let ft_name = features[i];
+          let angle = (Math.PI / 2) + (2 * Math.PI * i / features.length);
+          coordinates.push(angleToCoordinate(angle, data_point[ft_name]));
+      }
+      return coordinates;
+    }
+
+    // draw the path element
+    svg.selectAll("path")
+    .data(data_for_spader)
+    .join(
+        enter => enter.append("path")
+            .datum(d => getPathCoordinates(d))
+            .attr("d", line)
+            .attr("stroke-width", 3)
+            .attr("stroke", (_, i) => colors[i])
+            .attr("fill", (_, i) => colors[i])
+            .attr("stroke-opacity", 1)
+            .attr("opacity", 0.3)
+    );
+
+  })
 
 
   d3.csv("../data/CLDS2018_for_visualization.csv", d => {
