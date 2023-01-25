@@ -50,10 +50,113 @@
   dataset = NaN
   feature = NaN
   
-  
+  function buildGaugeCharts(wfreq) {
+    // Get all the sample data
+    // var samples = data.samples;
+
+    // // Filter the sample data to only include the selected sample
+    // var sampleArray = samples.filter(sampleObj => sampleObj.id == sample);
+    // // Filter the metadata data to only include the selected sample
+    // var metadataArray = data.metadata.filter(sampleObj => sampleObj.id == sample);
+    // var selectedSample = sampleArray[0];
+
+    // // Get the data for the selected sample
+    // var otu_ids = selectedSample.otu_ids;
+    // var otu_labels = selectedSample.otu_labels;
+    // var sample_values = selectedSample.sample_values;
+
+    // Code for Gauge Chart
+ // Trig to calc meter point
+ var degrees = 90 * (1 - wfreq);
+ radius = .5;
+var radians = degrees * Math.PI / 180;  // Calculate the angle in radians for the needle on the gauge chart
+var x = radius * Math.cos(radians); // Calculate the x-coordinate for the needle
+var y = radius * Math.sin(radians); // Calculate the y-coordinate for the needle
+
+// Create the path for the needle
+var mainPath = 'M -.0 -0.025 L .0 0.025 L ',
+  pathX = String(x),
+  space = ' ',
+  pathY = String(y),
+  pathEnd = ' Z';
+var path = mainPath.concat(pathX, space, pathY, pathEnd);
+
+// Create the path for the needle
+var mainPath = 'M ',
+pathX1 = -1 * Math.sin(radians) * .025,
+pathY1 = Math.cos(radians) * .025,
+pathX2 = -1 * pathX1,
+pathY2 = -1 * pathY1; 
+
+var path = mainPath.concat(pathX1, ' ', pathY1, ' L ', pathX2, ' ', pathY2, ' L ', String(x), ' ', String(y), ' Z'); 
+
+// Create the data for the scatter plot and the pie chart 
+var scatterData = { 
+type: 'scatter',
+x: [0], y: [0],
+marker: {
+    size: 24, 
+    color:'850000',
+    },
+showlegend: false,
+text: wfreq,
+hoverinfo: 'text'
+};
+
+var pieData = { 
+values: [50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50],
+rotation: 90,
+text: ['1',  '0.75', '0.5', '0.25', '0', '-0.25', '-0.5', '-0.75', '-1'],
+textinfo: 'text',
+textposition:'inside',	  
+marker: { 
+    colors: ["#69b3a2",
+    "#72aa9d",
+    "#7ca198",
+    "#859793",
+    "#8e8e8e",
+    "#978589",
+    "#a17c84",
+    "#aa727f",
+    "#b3697a",
+            'rgba(255, 255, 255, 0)']
+            
+    },
+hole: .5,
+type: 'pie',
+hoverinfo: 'text',
+showlegend: false
+};
+
+var gaugeData = [scatterData, pieData];
+
+var gaugeLayout = {
+    // Needle
+    shapes: [{
+        type: 'path',
+        path: path,
+        fillcolor: '850000',
+        line: { color: '850000' }
+    }],
+    margin: {
+      l: 50,
+      r: 50,
+      b: 0,
+      t: 150,
+      pad: 0
+    },
+    // title: 'Accepting Level',
+    height: 300, width: 300,
+    xaxis: { zeroline:false, showticklabels:false, showgrid: false, range: [-1, 1]},
+    yaxis: { zeroline:false, showticklabels:false, showgrid: false, range: [-1, 1]}
+};
+
+Plotly.newPlot('gauge', gaugeData, gaugeLayout, {showLink: false, 'displaylogo': false,  displayModeBar: false,});  // Create the gauge chart
+}
+
   /* Load the dataset and formatting variables
     Ref: https://www.d3indepth.com/requests/ */
-  const createCircular = (file_name, color, margin) => {
+  const createCircular = (id, file_name, color, margin, multiply_scalar) => {
   d3.csv(file_name, d => {
     return {
       'column': d.column,
@@ -71,7 +174,7 @@
     outerRadius = Math.min(width, height) / 2;   // the outerRadius goes from the middle of the SVG area to the border
 
 // append the svg object
-const svg = d3.select("#circular_bar")
+const svg = d3.select("#"+id)
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -108,10 +211,11 @@ const svg = d3.select("#circular_bar")
         .on('mouseover', function (d, i) {
             console.log(this);
             console.log(d)
-            console.log(i["column"])
+            console.log(i)
             d3.selectAll("#"+i["column"]).transition()
                  .duration('50')
                  .attr('opacity', '.65');
+            gauge_chart = buildGaugeCharts(i["diff"]* multiply_scalar);
        })
         .on('mouseout', function (d, i) {
             d3.selectAll("#"+i["column"]).transition()
@@ -138,5 +242,6 @@ const svg = d3.select("#circular_bar")
   })
                         
 }
-const circular1 = createCircular("../data/positive_circular.csv", "#69b3a2", {top: 50, right: 50, bottom: 0, left: 50})
-const circular2 = createCircular("../data/negative_circular.csv", "#b3697a", {top: 50, right: 50, bottom: 0, left: 50})
+const circular_negative = createCircular('circular_bar1', "../data/negative_circular.csv", "#b3697a", {top: 0, right: 50, bottom: 0, left: 50}, -1)
+const circular_positive = createCircular('circular_bar2', "../data/positive_circular.csv", "#69b3a2", {top: 0, right: 50, bottom: 0, left: 50}, 1)
+var gauge_chart = buildGaugeCharts(0)
