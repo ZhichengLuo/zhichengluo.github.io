@@ -297,7 +297,6 @@
 
 
 	function visible(partial) {
-		// console.log($t.offset())
         var $t = partial,
             $w = jQuery(window),
             viewTop = $w.scrollTop(),

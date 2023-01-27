@@ -23,10 +23,10 @@
       3:'Positive',
     },
     'SocialMedia': {
-      1: 'Frequent Social Media',
-      2: 'Sometimes Social Media',
-      3: 'Not much use Social Media',
-      4: 'Never use Social Media'
+      1: 'Frequent E-chat',
+      2: 'Sometimes E-chat',
+      3: 'Not much use E-chat',
+      4: 'Never use E-chat'
     },
     'MaritalStatus': {
         1: 'Single', 
@@ -34,8 +34,8 @@
         3: 'Remarriage'
     },
     'OnlineShopping': {
-        1: 'Frequent Online Shop',
-        4: 'Never Online Shop'
+        1: 'E-Shopper',
+        4: 'Never E-Shop'
     },
     'StudiedAbroad': {
         1: 'Studied Abroard',
@@ -234,7 +234,7 @@ const svg = d3.select("#"+id)
       .append("text")
         .text(function(d){return(circular_titles[d.column][d.index])})
         .attr("transform", function(d) { return (x(circular_titles[d.column][d.index]) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? "rotate(180)" : "rotate(0)"; })
-        .style("font-size", "11px")
+        .style("font-size", "18px")
         .attr("alignment-baseline", "middle")
 
   

@@ -8,7 +8,7 @@ df['StudiedAbroad'] = df["HasStudiesAbroad"]
 global_mean = float(df[['Attitude']].mean())
 positive_data = []
 negative_data = []
-for col in ['Education', 'Age', 'Income','SocialMedia', 'MaritalStatus', 'OnlineShopping', 'StudiedAbroad', 'ReligiousBelief']:
+for col in ['Education', 'Age', 'Income','SocialMedia', 'StudiedAbroad','OnlineShopping' , 'MaritalStatus', 'ReligiousBelief']:
     group_means = df[['Attitude', col]].groupby(by=col).mean()
     print(group_means)
     min_index_value = (None, 1)
