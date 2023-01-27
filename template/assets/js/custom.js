@@ -226,7 +226,8 @@
 	    $('.nav a').each(function () {
 	        var currLink = $(this);
 	        var refElement = $(currLink.attr("href"));
-	        if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+			// console.log(refElement.position());
+	        if (refElement.position() && refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
 	            $('.nav ul li a').removeClass("active");
 	            currLink.addClass("active");
 	        }
@@ -296,6 +297,7 @@
 
 
 	function visible(partial) {
+		// console.log($t.offset())
         var $t = partial,
             $w = jQuery(window),
             viewTop = $w.scrollTop(),
