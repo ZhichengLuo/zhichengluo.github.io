@@ -53,6 +53,10 @@ figure, header, nav, section, article, aside, footer, figcaption {
   height: 0;
 }
 
+.anychart-credits {
+  display: none;
+}
+
 .clearfix {
   display: inline-block;
 }
@@ -325,7 +329,7 @@ header
 .header-area .main-nav .nav li a {
   display: block;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 25px;
   text-transform: capitalize;
   color: #fff;
   -webkit-transition: all 0.3s ease 0s;

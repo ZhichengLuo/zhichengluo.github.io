@@ -32,10 +32,10 @@
       html,
       body,
       #radar_container {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
       }
     </style>
     <!-- ***** For Rader Chart End ***** -->
@@ -85,15 +85,75 @@
   <section class="main-banner" id="top">
     <div class="container">
       <div class="row">
-        <div class="col-lg-6 align-self-center">
-          <div class="header-text">
-            <h2>Some introduction to the project & <em>right</em> is a bar chart</h2>
+        <div class="col-lg-12">
+          <div class="section-heading">
+            <h4>Some <em>Introduction</em> to the project</h4>
           </div>
         </div>
+        <div class="col-lg-6" style="height: 350px;">
+          <!-- <div class="header-text"> -->
+            <h2>Some <em>Introduction</em> to the bar chart</h4>
+            <p>Some <em>Introduction</em> to the bar chart</p>
+            <p>Some <em>Introduction</em> to the bar chart</p>
+            <p>Some <em>Introduction</em> to the bar chart</p>
+            <!-- <h2>Some introduction to the project & <em>right</em> is a bar chart</h2> -->
+          <!-- </div> -->
+        </div>
         <div class="col-lg-6">
-          <div class="right-image">
-            <img src="assets/images/banner-right-image.png" alt="">
+          <div id="first_container" style="height:100%">
+            <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+            <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-pyramid-funnel.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+            <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+            <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-ui.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
+            <script>
+              anychart.onDocumentReady(function () {
+              
+                var chart = anychart.pyramid([
+                  {name: "Strongly negative", value: 2813,
+                    normal:   {
+                      fill: "#b3697a",
+                    },
+                  },
+                  {name: "Negative", value: 7732,
+                    normal:   {
+                      fill: "#d3697a",
+                    },
+                  },
+                  {name: "Neutral", value: 5051,
+                    normal:   {
+                      fill: "#007bb0",
+                    },
+                  },
+                  {name: "Positive", value: 597,
+                    normal:   {
+                      fill: "#69b3a2",
+                    },
+                  },
+                  {name: "Strongly positive", value: 24,
+                    normal:   {
+                      fill: "#30bf79",
+                    },
+                  }
+                ]);
+
+                // place labels to the right
+                chart
+                  .labels()
+                  .fontSize(20)
+                  .position('outside-right');
+
+                // set 45px connectors length   
+                chart.connectorLength(50);
+
+                // draw chart
+                chart.container("first_container");
+                chart.draw();
+              });
+            </script>
           </div>
+          <!-- <div class="right-image">
+            <img src="assets/images/banner-right-image.png" alt="">
+          </div> -->
         </div>
       </div>
     </div>
@@ -108,64 +168,79 @@
             <h4>Some <em>Introduction</em> to the Radar graph</h4>
           </div>
         </div>
-        <div class="col-lg-12" style="height:500px">
+        <div class="col-lg-12" style="height:600px">
           <div id="radar_container"></div>
           <script>
           
             anychart.onDocumentReady(function () {
-            // create data set on our data
-            var chartData = {
-              title: 'Characteristics of groups holding different attitudes towards homosexuality',
-              header: ['#', 'Negative', 'Neutral', 'Positive'],
-              rows: [
-              ['Education', 0.2, 0.5739805754949188, 0.8],
-              ['Age', 0.8, 0.595975131692656, 0.2],
-              ['Income', 0.2, 0.49321060966404984, 0.8],
-              ['HowMuchYouAgreeThatHavingBoysBetterThanGirls', 0.6922921101413757, 0.8, 0.2],
-              ['HomosexualPeopleYouKnow', 0.2, 0.31676078453362283, 0.8]
-              ]
-            };
-          
-            // create radar chart
-            var chart = anychart.radar();
-          
+              // create data set on our data
+              var chartData = {
+                title: 'Characteristics of groups holding different attitudes towards homosexuality',
+                header: ['#', 'Negative', 'Neutral', 'Positive'],
+                rows: [
+                ['Education', 0.2, 0.5739805754949188, 0.8],
+                ['Age', 0.8, 0.595975131692656, 0.2],
+                ['Income', 0.2, 0.49321060966404984, 0.8],
+                ['Traditional Belief', 0.6922921101413757, 0.8, 0.2], // HowMuchYouAgreeThatHavingBoysBetterThanGirls
+                ['Homosexual Friends', 0.2, 0.31676078453362283, 0.8] // how many homo ppl you know
+                ]
+              };
             
-            var interactivity = chart.interactivity();
-            interactivity.selectionMode("singleSelect");
+              // create radar chart
+              var chart = anychart.radar();
+
+              var interactivity = chart.interactivity();
+              interactivity.selectionMode("singleSelect");
+              
+              chart.palette(["#d3697a", "#007bb0", "#69b3a2"]);
+              // set default series type
+              chart.defaultSeriesType('area');
             
-            chart.palette(["#b3697a", "#b3a269", "#69b3a2"]);
-            // set default series type
-            chart.defaultSeriesType('area');
+              // set chart data
+              chart.data(chartData);
+            
+              // force chart to stack values by Y scale.
+              // chart.yScale().stackMode('value');
+            
           
-            // set chart data
-            chart.data(chartData);
           
-            // force chart to stack values by Y scale.
-            // chart.yScale().stackMode('value');
-          
-        
-        
-            chart.yGrid().palette(["gray 0.05", "gray 0.1"]);  
-            // set yAxis settings
-            chart.yAxis().stroke('#545f69');
-            chart.yAxis().ticks().stroke('#545f69');
-          
-            // set yAxis labels settings
-            chart
-              .yAxis()
-              .labels()
-              .fontColor('#545f69')
-              .format('{%Value}{scale:(1000000)|(M)}');
-          
-            // set chart legend settings
-            chart.legend().align('center').position('center-bottom').enabled(true);
-          
-            // set container id for the chart
-            chart.container('radar_container');
-            // initiate chart drawing
-            chart.draw();
+              chart.yGrid().palette(["gray 0.05", "gray 0.1"]);  
+              // set yAxis settings
+              chart.yAxis().stroke('#545f69');
+              chart.yAxis().ticks().stroke('#545f69');
+            
+              chart
+                .title()
+                .fontColor('#545f69')
+                .fontSize(17);
+              
+              chart
+                .xAxis()
+                .labels()
+                .fontColor('#545f69')
+                .fontSize(17);
+
+              // set yAxis labels settings
+              chart
+                .yAxis()
+                .labels()
+                .fontColor('gray')
+                .fontSize(17)
+                .format('{%Value}{scale:(1000000)|(M)}');
+            
+              // set chart legend settings
+              chart
+                .legend()
+                .align('center')
+                .fontSize(17)
+                .position('center-bottom')
+                .enabled(true);
+            
+              // set container id for the chart
+              chart.container('radar_container');
+              // initiate chart drawing
+              chart.draw();
             });
-          
           </script>
         </div>
       </div>
