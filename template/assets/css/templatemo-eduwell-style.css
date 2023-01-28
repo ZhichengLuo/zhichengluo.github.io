@@ -1024,7 +1024,7 @@ section.testimonials:before {
 section.testimonials:after {
   position: absolute;
   content: '';
-  background-image: url(../images/testimonials-right-dec.png);
+  /* background-image: url(../images/testimonials-right-dec.png); */
   right: 0px;
   bottom: -140px;
   width: 632px;
@@ -1595,7 +1595,7 @@ section.featured-product:before {
 section.featured-product:after {
   position: absolute;
   content: '';
-  background-image: url(../images/testimonials-right-dec.png);
+  /* background-image: url(../images/testimonials-right-dec.png); */
   right: 0px;
   bottom: -140px;
   width: 632px;

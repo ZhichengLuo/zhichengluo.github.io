@@ -119,7 +119,7 @@ marker: {
     "#a17c84",
     "#aa727f",
     "#b3697a",
-            'rgba(255, 255, 255, 0)']
+    'rgba(255, 255, 255, 0)']
             
     },
 hole: .5,
@@ -221,6 +221,7 @@ const svg = d3.select("#"+id)
             d3.selectAll("#"+i["column"]).transition()
                  .duration('50')
                  .attr('opacity', '1');
+            gauge_chart = buildGaugeCharts(0);
         
        })
 
