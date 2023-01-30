@@ -307,14 +307,17 @@
           <div class="section-heading">
             <h4>Groups of Different Categorical Attributes towards LGBT</h4>
             <h5>
-              We construct this cicular bar chart based on the how much score higher/lower than global average when it belongs to certain 
-              category in a scale of -1(negative) to 1(positive). When mouse over the each bar, the score will be shown in gauge chart. 
-
+              This circular bar chart means to represent the effect of <b>single categorical factor</b> on the attitudes towards LGBT. 
               <br>
-              For example, when mouse is over "Studied Abroad", the gauge shows 0.75. It means that people studied abroad will have 0.75 
+
+              We construct it based on the how much score higher/lower than global average when it belongs to certain 
+              category. 
+
+              <!-- <br>
+              The scale of score is from -1(negative) to 1(positive). When mouse over the each bar, the score will be shown in gauge chart.  For example, when mouse is over "Studied Abroad", the gauge shows 0.75. It means that people studied abroad will have 0.75 
               higher score than global average score.
               
-              <br>
+              <br> -->
               
             </h5>
             
@@ -340,6 +343,34 @@
       </tr>
   </table>
   </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-bottom">
+  <h6>
+    
+    <br>
+    Calculation: The scale of attitude score is from -1(negative) to 1(positive), when neutral is assign with 0. 
+    Calculated global average attitude score is -0.61. We calculate the increasement in each group compared to the global average. 
+    If the attitude score is -0.51, the result will be -0.51-(-0.61)=0.1. 
+
+    <br>
+    Interaction: When mouse over the each bar, the score will be shown in gauge chart.  
+    For example, when mouse is over "Studied Abroad", the gauge shows 0.75. 
+    It means that people studied abroad will have 0.75 
+    higher score than global average score.
+    
+    <br>
+    
+  </h6>
+</div>
+          
+</div>
+
+</div>
+</div>
+
   <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="../js/plotly-latest.min.js"></script>
         <script src="../js/circular.js"></script>
@@ -354,8 +385,10 @@
             <h4> Cross Attribute Comparision Heatmap chart </h4>
             <!-- <p>Cross dimension Chart: In this chart, we compare the average accepting rate with two differnet dimension.</p> -->
             <h5>
-            We construct this heatmap chart based on the how much score higher/lower than global average when it belongs to certain 
-            cross-section category in a scale of -1(negative) to 1(positive). It represent the mutual effect of two attributes.
+            The Heatmap Chart means to shown the <b> mutual effect of two attributes </b> on attitude towards LGBT.
+            <br>
+            We construct this heatmap chart based on the higher/lower score than global average when belongs to certain 
+            cross-section category.
             </h5>
           </div>
         </div>
@@ -403,6 +436,29 @@
       </tr>
   </table>
   
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="section-bottom">
+<h6>
+  
+  <br>
+  Calculation: The scale of attitude score is from -1(negative) to 1(positive), when neutral is assign with 0. 
+  Calculated global average attitude score is -0.61. We calculate the increasement in each group compared to the global average. 
+  If the attitude score is -0.51, the result will be -0.51-(-0.61)=0.1. 
+
+  <br>
+  Interaction: When mouse over the each slot, the exact increase/decrease score is shown. 
+  
+  <br>
+  
+</h6>
+</div>
+        
+</div>
+
+</div>
 </div>
 <br /><br /><br /><br /><br /><br />
   <script src="../js/heatmap.js"></script>
