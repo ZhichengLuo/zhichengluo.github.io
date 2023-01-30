@@ -215,7 +215,7 @@ section {
   padding-top: 20px;
   margin-top: 0px;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .section-heading h6 {
@@ -676,10 +676,11 @@ banner
 
 section.main-banner {
   margin-top: 0px;
+  text-align: left;
 }
 
 .main-banner {
-  padding-top: 180px;
+  padding-top: 130px;
 }
 
 .main-banner .right-image {
@@ -739,6 +740,10 @@ section.main-banner {
   color: #dc8cdb;
 }
 
+.main-banner h5 em {
+  color: #ff2795;
+}
+
 .main-banner .main-button-gradient {
   position: relative;
   z-index: 2;
@@ -750,6 +755,10 @@ section.main-banner {
 services
 ---------------------------------------------
 */ 
+
+section.services .section-heading {
+  text-align: left;
+}
 
 .services .item {
   border-radius: 15px;

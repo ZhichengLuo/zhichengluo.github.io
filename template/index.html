@@ -86,22 +86,32 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <div class="section-heading">
-            <h3>
-              <em>China</em> has probably the biggest LGBT population in the world. 
-              However most of them are still faced severe misunderstanding and discrimination from the society. 
-              It would be meaningful to analyze how people develop attitudes towards LGBT and therefore improve situation of LGBT in China.
-            </h3>
-            <h3>
-              In this project, we use the dataset of CLDS2018 (China Labor-force Dynamics Survey in 2018). (add some more detailed info) You can find the cleaned dataset at <a href="https://docs.google.com/spreadsheets/d/1lkup7AaxZ_oshy3leE1Evrkrk5rR94-u/edit?usp=sharing&ouid=108315486543480344550&rtpof=true&sd=true">Google Drive</a>
-            </h3>
+          <!-- <div class="section-heading"> -->
+            <h5>
+              China has probably the <em>BIGGEST LGBT population</em> in the world. 
+              However, this community still faces serious misunderstanding and discrimination from the society. 
+              In this project, we explored and analyzed the data from a national survey in China, which gives us an insight
+              into the attitudes towards LGBT of Chinese people and the situation of LGBT community in China.
+            </h4>
+            <br>
+            <h5>
+              The dataset used in this project comes from the China Labor-force Dynamics Survey 2018 (CLDS2018) 
+              carried out by Sun Yat-sen University in 2018. This survey is higly representative of China by covering a broad range of aspects of labor force 
+              in 29 Chinese provincial administrative units. After cleaning, 16217 samples with 29 selected attributes 
+              relevant to our research interest were kept. The cleaned data can be found at the <a href="https://docs.google.com/spreadsheets/d/1lkup7AaxZ_oshy3leE1Evrkrk5rR94-u/edit?usp=sharing&ouid=108315486543480344550&rtpof=true&sd=true">link</a>.
+            </h4>
 
 
             <!-- <h4>Some <em>Introduction</em> to the project</h4> -->
-          </div>
+          <!-- </div> -->
         </div>
-        <div class="col-lg-12" style="height: 400px;" >
-          <div id="first_container" style="height:100%; width: 70%; margin: auto;" >
+        <!-- <div class="col-lg-12"> -->
+          <div class="section-heading">
+            <h4>The overall distribution of people's attitudes towards LGBT in China</h4>
+          </div>
+        <!-- </div> -->
+        <div class="col-lg-12" style="height: 350px;" >
+          <div id="first_container" style="height:100%; width: 65%; margin: auto;" >
             <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
             <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-pyramid-funnel.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
             <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-exports.min.js?hcode=a0c21fc77e1449cc86299c5faa067dc4"></script>
@@ -146,10 +156,25 @@
                 // set 45px connectors length   
                 chart.connectorLength(50);
                 
-                chart
-                  .title("The distribution of attitudes towards LGBT of interviewees");
+                // chart
+                //   .title("The overall distribution of people's attitudes towards LGBT in China");
+                // chart 
+                //   .title()
+                //   .fontColor('black')
+                //   .fontSize(23);
                 // draw chart
                 chart.container("first_container");
+
+
+                var legend = chart.legend();
+
+
+                // set position mode
+                legend.positionMode("outside");
+                // set position and alignement
+                legend.position("bottom");
+                legend.align("left");
+                // legend.itemsLayout("horizontalExpandable");
                 chart.draw();
               });
             </script>
@@ -178,7 +203,7 @@
             <h4>Demongraphic characteristics of groups holding different attitudes towards LGBT</h4>
           </div>
         </div>
-        <div class="col-lg-9" style="height:600px">
+        <div class="col-lg-8" style="height:600px">
           <div id="radar_container"></div>
           <script>
           
@@ -262,6 +287,7 @@
               lower patriarchy tendency, and have a younger age.
 
             </h5>
+            <br>
             <h5>
               It shows monotonic trends among the 3 groups with only one exception in patriarchy tendency where 
               Neutral group believes the most in having boys is better than girls, followed by negative group and positive group.
