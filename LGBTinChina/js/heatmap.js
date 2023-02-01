@@ -27,7 +27,7 @@ const heatmap_titles = {
     },
   }
 function createHeatMap (column_name1, column_name2) {
-    d3.csv("../data/heatmap_data/"+column_name1+"_"+column_name2+".csv", d => {
+    d3.csv("./data/heatmap_data/"+column_name1+"_"+column_name2+".csv", d => {
         return {
           'column1': d[column_name1],
           'column2': d[column_name2],

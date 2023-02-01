@@ -1,6 +1,6 @@
 
   var data_for_pie;
-  var data_for_spader;
+  var data_for_radar;
 
   const titles = {
     'Education': {
@@ -34,21 +34,21 @@
   }
 
   // load data for spader chart
-  d3.csv("../data/data_for_rader.csv", d => {
+  d3.csv("../data/data_for_radar.csv", d => {
     return {
       'Attitude': d.Attitude,
       'Income': d.Income,
       'Age': d.Age,
       'Education': d.Education,
-      'Do you agree it\'s better to have boys than girls': d.HowMuchYouAgreeThatHavingBoysBetterThanGirls1,
+      'Do you agree it\'s better to have boys than girls': d.HowMuchYouAgreeThatHavingBoysBetterThanGirls,
       'How many homosexual people do you know': d.HomosexualPeopleYouKnow,
     }
   }).then(data => {
     
-    let features = ['Income', 'Age', 'Education', 'Do you agree it\'s better to have boys than girls',  'How many homosexual people do you know']
+    let features = ['Income', 'Age',  'How many homosexual people do you know', 'Education', 'Do you agree it\'s better to have boys than girls']
 
-    data_for_spader = data
-    console.log("data_for_spader", data_for_spader)
+    data_for_radar = data
+    console.log("data_for_radar", data_for_radar)
  
     let width = 800
     let height = 800;
@@ -61,9 +61,9 @@
     
     console.log(data.map(d => d.Attitude))
     let radialScale = d3.scaleLinear()
-      .domain([0,3])
+      .domain([0,1])
       .range([0, 250]);
-    let ticks = [1, 2, 3];
+    let ticks = [0.2, 0.4, 0.6, 0.8, 1];
   
     svg.selectAll("circle")
     .data(ticks)
@@ -82,10 +82,11 @@
     .join(
         enter => enter.append("text")
             .attr("class", "ticklabel")
-            .attr("x", width / 2 + 5)
-            .attr("y", d => height / 2 - radialScale(d))
-            .text(d => d.toString())
+            .attr("x", width / 2 + 2)
+            .attr("y", d => height / 2 - radialScale(d) + 10)
+            .text(d => (d*100).toString())
             .attr("opacity", 0.5)
+            .style("font-size", "10") 
     );
 
     function angleToCoordinate(angle, value){
@@ -99,8 +100,8 @@
       return {
           "name": f,
           "angle": angle,
-          "line_coord": angleToCoordinate(angle, 3),
-          "label_coord": angleToCoordinate(angle, 3.5)
+          "line_coord": angleToCoordinate(angle, 1),
+          "label_coord": angleToCoordinate(angle, 1.05)
       };
     });
   
@@ -129,10 +130,10 @@
               .text(d => d.name)
       );
 
-      let line = d3.line()
-        .x(d => d.x)
-        .y(d => d.y);
-      let colors = ["red", "yellow", "green"];
+    let line = d3.line()
+      .x(d => d.x)
+      .y(d => d.y);
+    let colors = ["red", "yellow", "green"];
 
     function getPathCoordinates(data_point){
       let coordinates = [];
@@ -146,11 +147,11 @@
 
     // draw the path element
     svg.selectAll("path")
-    .data(data_for_spader)
+    .data(data_for_radar)
     .join(
         enter => enter.append("path")
             .datum(d => getPathCoordinates(d))
-            .attr("d", line)
+            .attr("d", d=> line(d))
             .attr("stroke-width", 3)
             .attr("stroke", (_, i) => colors[i])
             .attr("fill", (_, i) => colors[i])

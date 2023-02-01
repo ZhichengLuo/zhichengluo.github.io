@@ -243,6 +243,6 @@ const svg = d3.select("#"+id)
   })
                         
 }
-const circular_negative = createCircular('circular_bar1', "../data/negative_circular.csv", "#b3697a", {top: 0, right: 50, bottom: 0, left: 50}, -1)
-const circular_positive = createCircular('circular_bar2', "../data/positive_circular.csv", "#69b3a2", {top: 0, right: 50, bottom: 0, left: 50}, 1)
+const circular_negative = createCircular('circular_bar1', "./data/negative_circular.csv", "#b3697a", {top: 0, right: 50, bottom: 0, left: 50}, -1)
+const circular_positive = createCircular('circular_bar2', "./data/positive_circular.csv", "#69b3a2", {top: 0, right: 50, bottom: 0, left: 50}, 1)
 var gauge_chart = buildGaugeCharts(0)
